@@ -51,10 +51,10 @@ If a contact sent a new message in less than 2 hours interval, and there is no t
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/luancv/whaticket/three/images/pageLogin.png" width="350">
-<img src="https://raw.githubusercontent.com/luancv/whaticket/three/images/pageBot.png" width="350">
-<img src="https://raw.githubusercontent.com/luancv/whaticket/three/images/pageDash.png" width="350">
-<img src="https://raw.githubusercontent.com/luancv/whaticket/three/images/pageData.png" width="350">
+<img src="https://raw.githubusercontent.com/luancv/whaticket/images/pageLogin.png" width="350">
+<img src="https://raw.githubusercontent.com/luancv/whaticket/images/pageBot.png" width="350">
+<img src="https://raw.githubusercontent.com/luancv/whaticket/images/pageDash.png" width="350">
+<img src="https://raw.githubusercontent.com/luancv/whaticket/images/pageData.png" width="350">
 
 ## Features
 
