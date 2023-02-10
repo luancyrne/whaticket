@@ -50,7 +50,7 @@ const Login = () => {
       <Container component="main" maxWidth="xs">
         <div className="card">
           <div className="formEl">
-            <img src={logo} alt="CNX Telecom - Você sempre conectado!" />
+          <label> Gerenciamento de atendimento </label>
             <form noValidate onSubmit={handlSubmit}>
               <h4>Bem vindo a central de atendimento</h4>
               <p>Efetue o login para ter acesso ao painel de atendimento</p>
@@ -67,7 +67,7 @@ const Login = () => {
               <button type="submit">Entrar</button>
               <footer>
                 <label style={{ marginBottom: 10 }}>{"Design & APIs: Luan Cyrne"}</label>
-                <label>Direitos Reservados © 2022 CNX Telecom</label>
+                {/* <label>Direitos Reservados © 2022 {}</label> */}
               </footer>
             </form>
           </div>

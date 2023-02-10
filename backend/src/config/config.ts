@@ -1,10 +1,10 @@
 const config = {
     backend:'http://localhost:3500',
     frontend:'http://localhost:3000',
-    db:'whatsappbly',
-    user:'postgres',
+    db:'dbname',
+    user:'userdb',
     dbtype:'postgres',
-    pass:'adminspfc',
+    pass:'password',
     dbhost:'localhost',
     port:3500
 }

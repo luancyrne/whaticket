@@ -78,7 +78,7 @@ const SignUp = () => {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<img src={logo} alt="CNX Telecom - Você sempre conectado!" />
+			<label> Gerenciamento de atendimento </label>
 				<Formik
 					initialValues={user}
 					enableReinitialize={true}
