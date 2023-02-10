@@ -25,7 +25,6 @@ import { i18n } from "../../translate/i18n";
 
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
-import logo from '../../layout/img/logobranca.png';
 
 const useStyles = makeStyles(theme => ({
 	paper: {

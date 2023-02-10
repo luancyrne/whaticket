@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import logo from './img/logobranca.png';
 import { Link } from "react-router-dom";
 
 

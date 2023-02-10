@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import logo from '../../layout/img/logobranca.png';
 import "../../layout/styles/login.css"
 
 import {
