@@ -13,9 +13,6 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
-import SearchIcon from "@material-ui/icons/Search";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -28,12 +25,12 @@ import ConfirmationModal from "../../components/ConfirmationModal/";
 
 import { i18n } from "../../translate/i18n";
 import MainHeader from "../../components/MainHeader";
-import Title from "../../components/Title";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 import MainContainer from "../../components/MainContainer";
 import toastError from "../../errors/toastError";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../../components/Can";
+import host from '../../services/config';
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_CONTACTS") {
@@ -84,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     padding: theme.spacing(1),
     overflowY: "scroll",
+    background: "#283046",
     ...theme.scrollbarStyles,
   },
 }));
@@ -130,7 +128,7 @@ const Contacts = () => {
   }, [searchParam, pageNumber]);
 
   useEffect(() => {
-    const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+    const socket = openSocket(host.hostBack);
 
     socket.on("contact", (data) => {
       if (data.action === "update" || data.action === "create") {
@@ -226,9 +224,8 @@ const Contacts = () => {
       <ConfirmationModal
         title={
           deletingContact
-            ? `${i18n.t("contacts.confirmationModal.deleteTitle")} ${
-                deletingContact.name
-              }?`
+            ? `${i18n.t("contacts.confirmationModal.deleteTitle")} ${deletingContact.name
+            }?`
             : `${i18n.t("contacts.confirmationModal.importTitlte")}`
         }
         open={confirmOpen}
@@ -244,29 +241,19 @@ const Contacts = () => {
           : `${i18n.t("contacts.confirmationModal.importMessage")}`}
       </ConfirmationModal>
       <MainHeader>
-        <Title>{i18n.t("contacts.title")}</Title>
+        <h1 style={{ color: "#d0d2d6" }}>Contatos</h1>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <input value={searchParam} className="inputS" onChange={handleSearch} placeholder="Pesquisar" ></input>
           <Button
             variant="contained"
             color="primary"
+            className="buttonRox"
             onClick={(e) => setConfirmOpen(true)}
           >
             {i18n.t("contacts.buttons.import")}
           </Button>
           <Button
+            className="buttonRox"
             variant="contained"
             color="primary"
             onClick={handleOpenContactModal}
@@ -281,17 +268,17 @@ const Contacts = () => {
         onScroll={handleScroll}
       >
         <Table size="small">
-          <TableHead>
+          <TableHead style={{ border: "1px solid #343d55", background: "#343d55", fontFamily: "Bold" }}>
             <TableRow>
-              <TableCell padding="checkbox" />
-              <TableCell>{i18n.t("contacts.table.name")}</TableCell>
-              <TableCell align="center">
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} padding="checkbox" />
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }}>{i18n.t("contacts.table.name")}</TableCell>
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
                 {i18n.t("contacts.table.whatsapp")}
               </TableCell>
-              <TableCell align="center">
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
                 {i18n.t("contacts.table.email")}
               </TableCell>
-              <TableCell align="center">
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
                 {i18n.t("contacts.table.actions")}
               </TableCell>
             </TableRow>
@@ -300,20 +287,22 @@ const Contacts = () => {
             <>
               {contacts.map((contact) => (
                 <TableRow key={contact.id}>
-                  <TableCell style={{ paddingRight: 0 }}>
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold", paddingRight: 0 }}>
                     {<Avatar src={contact.profilePicUrl} />}
                   </TableCell>
-                  <TableCell>{contact.name}</TableCell>
-                  <TableCell align="center">{contact.number}</TableCell>
-                  <TableCell align="center">{contact.email}</TableCell>
-                  <TableCell align="center">
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }}>{contact.name}</TableCell>
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{contact.number}</TableCell>
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{contact.email}</TableCell>
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
                     <IconButton
                       size="small"
                       onClick={() => handleSaveTicket(contact.id)}
+                      style={{ color: "#b4b7bd" }}
                     >
                       <WhatsAppIcon />
                     </IconButton>
                     <IconButton
+                      style={{ color: "#b4b7bd" }}
                       size="small"
                       onClick={() => hadleEditContact(contact.id)}
                     >
@@ -325,6 +314,7 @@ const Contacts = () => {
                       yes={() => (
                         <IconButton
                           size="small"
+                          style={{ color: "#b4b7bd" }}
                           onClick={(e) => {
                             setConfirmOpen(true);
                             setDeletingContact(contact);

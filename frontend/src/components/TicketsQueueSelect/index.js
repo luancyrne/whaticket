@@ -21,6 +21,7 @@ const TicketsQueueSelect = ({
 				<Select
 					multiple
 					displayEmpty
+					style={{color:"#d0d2d6"}}
 					variant="outlined"
 					value={selectedQueueIds}
 					onChange={handleChange}

@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 		flexShrink: 0,
 	},
 	drawerPaper: {
+		background:"#1e232f",
 		width: drawerWidth,
 		display: "flex",
 		borderTop: "1px solid rgba(0, 0, 0, 0.12)",
@@ -35,8 +36,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	header: {
 		display: "flex",
-		borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-		backgroundColor: "#eee",
+		borderBottom: "1px solid #3b4253",
+		backgroundColor: "#1e232f",
 		alignItems: "center",
 		padding: theme.spacing(0, 1),
 		minHeight: "73px",
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	content: {
 		display: "flex",
-		backgroundColor: "#eee",
+		backgroundColor: "#1e232f",
 		flexDirection: "column",
 		padding: "8px 0px 8px 8px",
 		height: "100%",
@@ -67,17 +68,22 @@ const useStyles = makeStyles(theme => ({
 		"& > *": {
 			margin: 4,
 		},
+		background:"#1e232f"
 	},
 
 	contactDetails: {
 		marginTop: 8,
 		padding: 8,
 		display: "flex",
+		color:"#d0d2d6",
 		flexDirection: "column",
+		background:"#1e232f"
 	},
 	contactExtraInfo: {
 		marginTop: 4,
 		padding: 6,
+		background:"#283046",
+		color:"#d0d2d6"
 	},
 }));
 
@@ -149,7 +155,7 @@ const ContactDrawer = ({ open, handleDrawerClose, contact, loading }) => {
 								variant="outlined"
 								className={classes.contactExtraInfo}
 							>
-								<InputLabel>{info.name}</InputLabel>
+								<InputLabel style={{color:"#d0d2d6"}}>{info.name}</InputLabel>
 								<Typography component="div" noWrap style={{ paddingTop: 2 }}>
 									<MarkdownWrapper>{info.value}</MarkdownWrapper>
 								</Typography>

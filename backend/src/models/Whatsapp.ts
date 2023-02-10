@@ -54,6 +54,10 @@ class Whatsapp extends Model<Whatsapp> {
   farewellMessage: string;
 
   @Default(false)
+  @Column(DataType.BOOLEAN)
+  isMultidevice: boolean;
+
+  @Default(false)
   @AllowNull
   @Column
   isDefault: boolean;

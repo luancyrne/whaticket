@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-
+import { TagsContainer } from "../TagsContainer";
 import { toast } from "react-toastify";
 import openSocket from "socket.io-client";
 import clsx from "clsx";
@@ -16,6 +16,7 @@ import MessagesList from "../MessagesList";
 import api from "../../services/api";
 import { ReplyMessageProvider } from "../../context/ReplyingMessage/ReplyingMessageContext";
 import toastError from "../../errors/toastError";
+import host from "../../services/config";
 
 const drawerWidth = 320;
 
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
+    border:'0',
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     borderLeft: "0",
@@ -104,7 +106,7 @@ const Ticket = () => {
   }, [ticketId, history]);
 
   useEffect(() => {
-    const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+    const socket = openSocket(host.hostBack);
 
     socket.on("connect", () => socket.emit("joinChatBox", ticketId));
 
@@ -164,6 +166,9 @@ const Ticket = () => {
             <TicketActionButtons ticket={ticket} />
           </div>
         </TicketHeader>
+        <Paper style={{background:'#283046'}}>
+          <TagsContainer ticket={ticket} />
+        </Paper>
         <ReplyMessageProvider>
           <MessagesList
             ticketId={ticketId}

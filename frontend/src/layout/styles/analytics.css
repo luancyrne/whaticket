@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+}
+
+.cardBefore {
+    background-color: #283046;
+    height: 10em;
+    width: 21.7em;
+    border-radius: 5px;
+    display: flex;
+    margin: 21px 0px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    color: #d0d2d6;
+}
+
+.cardBeforeAn {
+    background-color: #283046;
+    height: 20em;
+    border-radius: 5px;
+    display: flex;
+    margin: 21px 0px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    color: #d0d2d6;
+}
+
+.cardBefore>div>h1,
+p {
+    font-size: 1.4em;
+}
+
+.cardBefore>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+
+.cardBefore>#circle1 {
+    background-color: #7367f0;
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardBefore>#circle1>svg {
+    height: 2em;
+    width: 2em;
+}
+
+.cardBefore>#circle2>svg {
+    height: 2em;
+    width: 2em;
+}
+
+.cardBefore>#circle3>svg {
+    height: 2em;
+    width: 2em;
+}
+
+.cardBefore>#circle2 {
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff9f43;
+}
+
+.cardBefore>#circle3 {
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #28c76f;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

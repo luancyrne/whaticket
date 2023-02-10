@@ -190,6 +190,7 @@ const QuickAnswersModal = ({
                   color="secondary"
                   disabled={isSubmitting}
                   variant="outlined"
+                  className="buttonRed"
                 >
                   {i18n.t("quickAnswersModal.buttons.cancel")}
                 </Button>
@@ -198,7 +199,7 @@ const QuickAnswersModal = ({
                   color="primary"
                   disabled={isSubmitting}
                   variant="contained"
-                  className={classes.btnWrapper}
+                  className="buttonRox"
                 >
                   {quickAnswerId
                     ? `${i18n.t("quickAnswersModal.buttons.okEdit")}`

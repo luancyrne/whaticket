@@ -7,20 +7,17 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 
 import {
-	Avatar,
 	Button,
 	CssBaseline,
 	TextField,
 	Grid,
-	Box,
-	Typography,
 	Container,
 	InputAdornment,
 	IconButton,
 	Link
   } from '@material-ui/core';
   
-import { LockOutlined, Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
   
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -28,19 +25,7 @@ import { i18n } from "../../translate/i18n";
 
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
-
-// const Copyright = () => {
-// 	return (
-// 		<Typography variant="body2" color="textSecondary" align="center">
-// 			{"Copyleft "}
-// 			<Link color="inherit" href="https://github.com/canove">
-// 				Canove
-// 			</Link>{" "}
-// 			{new Date().getFullYear()}
-// 			{"."}
-// 		</Typography>
-// 	);
-// };
+import logo from '../../layout/img/logobranca.png';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -93,13 +78,7 @@ const SignUp = () => {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<LockOutlined />
-				</Avatar>
-				<Typography component="h1" variant="h5">
-					{i18n.t("signup.title")}
-				</Typography>
-				{/* <form className={classes.form} noValidate onSubmit={handleSignUp}> */}
+				<img src={logo} alt="CNX Telecom - Você sempre conectado!" />
 				<Formik
 					initialValues={user}
 					enableReinitialize={true}
@@ -174,9 +153,10 @@ const SignUp = () => {
 								fullWidth
 								variant="contained"
 								color="primary"
-								className={classes.submit}
+								className="buttonRox"
+								style={{marginTop:"10px"}}
 							>
-								{i18n.t("signup.buttons.submit")}
+								Cadastrar
 							</Button>
 							<Grid container justify="flex-end">
 								<Grid item>
@@ -194,7 +174,6 @@ const SignUp = () => {
 					)}
 				</Formik>
 			</div>
-			<Box mt={5}>{/* <Copyright /> */}</Box>
 		</Container>
 	);
 };

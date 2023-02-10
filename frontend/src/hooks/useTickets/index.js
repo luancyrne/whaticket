@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import config from '../../services/config'
 import toastError from "../../errors/toastError";
 
 import api from "../../services/api";
@@ -11,10 +12,12 @@ const useTickets = ({
 	showAll,
 	queueIds,
 	withUnreadMessages,
+	tags,
 }) => {
 	const [loading, setLoading] = useState(true);
 	const [hasMore, setHasMore] = useState(false);
 	const [tickets, setTickets] = useState([]);
+	const [count, setCount] = useState(0);
 
 	useEffect(() => {
 		setLoading(true);
@@ -30,19 +33,47 @@ const useTickets = ({
 							showAll,
 							queueIds,
 							withUnreadMessages,
+							tags,
 						},
-					});
-					setTickets(data.tickets);
-					setHasMore(data.hasMore);
-					setLoading(false);
+					})
+					setTickets(data.tickets)
+
+					let horasFecharAutomaticamente = config.horas;
+
+					if (status === "open" && horasFecharAutomaticamente && horasFecharAutomaticamente !== "" &&
+						horasFecharAutomaticamente !== "0" && Number(horasFecharAutomaticamente) > 0) {
+
+						let dataLimite = new Date()
+						dataLimite.setHours(dataLimite.getHours() - Number(horasFecharAutomaticamente))
+
+						data.tickets.forEach(ticket => {
+							if (ticket.status !== "closed") {
+								let dataUltimaInteracaoChamado = new Date(ticket.updatedAt)
+								if (dataUltimaInteracaoChamado < dataLimite)
+									closeTicket(ticket)
+							}
+						})
+					}
+
+					setHasMore(data.hasMore)
+					setCount(data.count)
+					setLoading(false)
 				} catch (err) {
-					setLoading(false);
-					toastError(err);
+					setLoading(false)
+					toastError(err)
 				}
-			};
-			fetchTickets();
-		}, 500);
-		return () => clearTimeout(delayDebounceFn);
+			}
+
+			const closeTicket = async (ticket) => {
+				await api.put(`/tickets/${ticket.id}`, {
+					status: "closed",
+					userId: ticket.userId || null,
+				})
+			}
+
+			fetchTickets()
+		}, 500)
+		return () => clearTimeout(delayDebounceFn)
 	}, [
 		searchParam,
 		pageNumber,
@@ -51,9 +82,10 @@ const useTickets = ({
 		showAll,
 		queueIds,
 		withUnreadMessages,
-	]);
+		tags,
+	])
 
-	return { tickets, loading, hasMore };
+	return { tickets, loading, hasMore, count };
 };
 
 export default useTickets;

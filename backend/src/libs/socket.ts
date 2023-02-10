@@ -2,18 +2,20 @@ import { Server as SocketIO } from "socket.io";
 import { Server } from "http";
 import AppError from "../errors/AppError";
 import { logger } from "../utils/logger";
+import config from '../config/config'
 
 let io: SocketIO;
 
 export const initIO = (httpServer: Server): SocketIO => {
   io = new SocketIO(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_URL
+      origin: config.frontend
     }
   });
 
   io.on("connection", socket => {
     logger.info("Client Connected");
+
     socket.on("joinChatBox", (ticketId: string) => {
       logger.info("A client joined a ticket channel");
       socket.join(ticketId);

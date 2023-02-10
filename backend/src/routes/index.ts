@@ -10,7 +10,12 @@ import messageRoutes from "./messageRoutes";
 import whatsappSessionRoutes from "./whatsappSessionRoutes";
 import queueRoutes from "./queueRoutes";
 import quickAnswerRoutes from "./quickAnswerRoutes";
-
+import apiRoutes from "./apiRoutes";
+import chatBot from "./chatBotRoutes";
+import webHookRoutes from "./webHookRoutes";
+import scheduleRoutes from "./scheduleRoutes";
+import tagRoutes from "./tagRoutes";
+// import dashboardRoutes from "./dashboardRoutes";
 const routes = Router();
 
 routes.use(userRoutes);
@@ -23,5 +28,10 @@ routes.use(messageRoutes);
 routes.use(whatsappSessionRoutes);
 routes.use(queueRoutes);
 routes.use(quickAnswerRoutes);
-
+routes.use(chatBot);
+routes.use(scheduleRoutes);
+routes.use(tagRoutes);
+// routes.use(dashboardRoutes);
+routes.use("/webhook", webHookRoutes);
+routes.use("/api/messages", apiRoutes);
 export default routes;

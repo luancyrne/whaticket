@@ -21,6 +21,7 @@ const ConfirmationModal = ({ title, children, open, onClose, onConfirm }) => {
 			</DialogContent>
 			<DialogActions>
 				<Button
+					className="buttonRed"
 					variant="contained"
 					onClick={() => onClose(false)}
 					color="default"
@@ -28,6 +29,7 @@ const ConfirmationModal = ({ title, children, open, onClose, onConfirm }) => {
 					{i18n.t("confirmationModal.buttons.cancel")}
 				</Button>
 				<Button
+					className="buttonRox"
 					variant="contained"
 					onClick={() => {
 						onClose(false);

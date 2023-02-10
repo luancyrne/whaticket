@@ -57,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 	contactNameWrapper: {
 		display: "flex",
+		color: "#d0d2d6",
 		justifyContent: "space-between",
 	},
 
@@ -73,6 +74,7 @@ const useStyles = makeStyles(theme => ({
 
 	contactLastMessage: {
 		paddingRight: 20,
+		color: "#676d7d"
 	},
 
 	newMessagesCount: {
@@ -171,7 +173,7 @@ const TicketListItem = ({ ticket }) => {
 								noWrap
 								component="span"
 								variant="body2"
-								color="textPrimary"
+
 							>
 								{ticket.contact.name}
 							</Typography>
@@ -187,7 +189,6 @@ const TicketListItem = ({ ticket }) => {
 									className={classes.lastMessageTime}
 									component="span"
 									variant="body2"
-									color="textSecondary"
 								>
 									{isSameDay(parseISO(ticket.updatedAt), new Date()) ? (
 										<>{format(parseISO(ticket.updatedAt), "HH:mm")}</>
@@ -196,6 +197,27 @@ const TicketListItem = ({ ticket }) => {
 									)}
 								</Typography>
 							)}
+							
+							{/* <span style={{backgroundColor: ticket.queue?.color || "#7C7C7C", padding:'3px', borderRadius:'2px'}}>
+							{ticket.whatsappId && (
+								<div
+									className={classes.userTag}
+									title={i18n.t("ticketsList.connectionTitle")}
+								>
+									Whatsapp de Origem: {ticket.whatsapp?.name}
+								</div>
+							)}
+
+							{ticket.channel !== "whatsapp" && (
+								<div
+									className={classes.userTag}
+									title={i18n.t("ticketsList.connectionTitle")}
+								>
+									{ticket.channel}
+								</div>
+							)}
+							</span> */}
+
 						</span>
 					}
 					secondary={

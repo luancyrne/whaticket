@@ -1,68 +1,29 @@
-import React, { useState, useContext } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import logo from '../../layout/img/logobranca.png';
+import "../../layout/styles/login.css"
 
 import {
-  Avatar,
-  Button,
-  CssBaseline,
-  TextField,
-  Grid,
-  Box,
-  Typography,
-  Container,
-  InputAdornment,
-  IconButton,
-  Link
+  Container
 } from '@material-ui/core';
-
-import { LockOutlined, Visibility, VisibilityOff } from '@material-ui/icons';
-
-import { makeStyles } from "@material-ui/core/styles";
-
-import { i18n } from "../../translate/i18n";
+// import Button from '@material-ui/core/Button';
+// import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import { AuthContext } from "../../context/Auth/AuthContext";
 
-// const Copyright = () => {
-// 	return (
-// 		<Typography variant="body2" color="textSecondary" align="center">
-// 			{"Copyleft "}
-// 			<Link color="inherit" href="https://github.com/canove">
-// 				Canove
-// 			</Link>{" "}
-// 			{new Date().getFullYear()}
-// 			{"."}
-// 		</Typography>
-// 	);
-// };
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 const Login = () => {
-  const classes = useStyles();
 
   const [user, setUser] = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
+  const [mobile, setMobile] = useState(false)
 
   const { handleLogin } = useContext(AuthContext);
+
+  useEffect(() => {
+    window.screen.width <= 600 ? setMobile(true) : setMobile(false)
+
+    if (mobile) {
+      document.getElementById("root").style.height = "100%"
+    }
+  }, [mobile])
 
   const handleChangeInput = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -74,79 +35,45 @@ const Login = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlined />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {i18n.t("login.title")}
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={handlSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label={i18n.t("login.form.email")}
-            name="email"
-            value={user.email}
-            onChange={handleChangeInput}
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label={i18n.t("login.form.password")}
-            id="password"
-            value={user.password}
-            onChange={handleChangeInput}
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowPassword((e) => !e)}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {i18n.t("login.buttons.submit")}
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link
-                href="#"
-                variant="body2"
-                component={RouterLink}
-                to="/signup"
-              >
-                {i18n.t("login.buttons.register")}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>{/* <Copyright /> */}</Box>
-    </Container>
+    <div className="login">
+      {/* {
+        mobile ? null :
+          <div className="cardDownload" style={{ position: "absolute", right: 0, top: 0, marginRight: "4em", marginTop: "2em", display:"flex", flexDirection:"column", alignItems:"center" }}>
+            <p style={{ color: "white", fontSize: "1.2em" }}>Baixe agora o aplicativo mobile</p>
+            <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" style={{marginTop:10}}>
+              <Button><a href="">Android</a></Button>
+              <Button><a href="">iOS</a></Button>
+            </ButtonGroup>
+          </div>
+      } */}
+
+      <Container component="main" maxWidth="xs">
+        <div className="card">
+          <div className="formEl">
+            <img src={logo} alt="CNX Telecom - Você sempre conectado!" />
+            <form noValidate onSubmit={handlSubmit}>
+              <h4>Bem vindo a central de atendimento</h4>
+              <p>Efetue o login para ter acesso ao painel de atendimento</p>
+              <div>
+                <label>Email</label>
+                <input id="email" name="email" required autoComplete="email" autoFocus value={user.email} onChange={handleChangeInput} type="email" placeholder="Email:" />
+                <div style={{ marginTop: 14, display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                  <label>Senha</label>
+                </div>
+
+                <input id="password" name="password" required value={user.password} onChange={handleChangeInput} type={"password"} placeholder="Senha:" />
+              </div>
+
+              <button type="submit">Entrar</button>
+              <footer>
+                <label style={{ marginBottom: 10 }}>{"Design & APIs: Luan Cyrne"}</label>
+                <label>Direitos Reservados © 2022 CNX Telecom</label>
+              </footer>
+            </form>
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 };
 

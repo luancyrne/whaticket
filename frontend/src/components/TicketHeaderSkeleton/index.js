@@ -7,8 +7,9 @@ import Skeleton from "@material-ui/lab/Skeleton";
 const useStyles = makeStyles(theme => ({
 	ticketHeader: {
 		display: "flex",
-		backgroundColor: "#eee",
+		backgroundColor: "#283046",
 		flex: "none",
+		color:"#d0d2d6",
 		borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
 	},
 }));

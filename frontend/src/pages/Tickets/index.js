@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TicketsManager from "../../components/TicketsManager/";
 import Ticket from "../../components/Ticket/";
 
-import { i18n } from "../../translate/i18n";
+
 import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     // // backgroundColor: "#eee",
     // padding: theme.spacing(4),
-    height: `calc(100% - 48px)`,
+    height: `100%`,
     overflowY: "hidden",
   },
 
@@ -30,8 +30,10 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     flexDirection: "column",
     overflowY: "hidden",
+    borderRight:"2px solid #3b4253"
   },
   contactsWrapperSmall: {
+    borderRight: "2px solid #3b4253",
     display: "flex",
     height: "100%",
     flexDirection: "column",
@@ -46,8 +48,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   welcomeMsg: {
-    backgroundColor: "#eee",
+    backgroundColor: "#1e232f",
     display: "flex",
+    color:"#d0d2d6",
+    fontSize:"20px",
+    fontFamily:"Regular",
     justifyContent: "space-evenly",
     alignItems: "center",
     height: "100%",
@@ -91,7 +96,7 @@ const Chat = () => {
               <Hidden only={["sm", "xs"]}>
                 <Paper className={classes.welcomeMsg}>
                   {/* <Paper square variant="outlined" className={classes.welcomeMsg}> */}
-                  <span>{i18n.t("chat.noTicketMessage")}</span>
+                  <span>Selecione um ticket para iniciar uma conversa</span>
                 </Paper>
               </Hidden>
             )}

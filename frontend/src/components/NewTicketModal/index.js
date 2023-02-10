@@ -185,6 +185,7 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 					<Button
 						onClick={handleClose}
 						color="secondary"
+						className="buttonRed"
 						disabled={loading}
 						variant="outlined"
 					>
@@ -197,6 +198,7 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 						onClick={() => handleSaveTicket(selectedContact.id)}
 						color="primary"
 						loading={loading}
+						className="buttonRox"
 					>
 						{i18n.t("newTicketModal.buttons.ok")}
 					</ButtonWithSpinner>

@@ -50,6 +50,7 @@ const TicketActionButtons = ({ ticket }) => {
 
 			setLoading(false);
 			if (status === "open") {
+				api.post(`/message/`)
 				history.push(`/tickets/${ticket.id}`);
 			} else {
 				history.push("/tickets");
@@ -67,6 +68,7 @@ const TicketActionButtons = ({ ticket }) => {
 					loading={loading}
 					startIcon={<Replay />}
 					size="small"
+					style={{color:"#d0d2d6"}}
 					onClick={e => handleUpdateTicketStatus(e, "open", user?.id)}
 				>
 					{i18n.t("messagesList.header.buttons.reopen")}
@@ -78,6 +80,7 @@ const TicketActionButtons = ({ ticket }) => {
 						loading={loading}
 						startIcon={<Replay />}
 						size="small"
+						style={{color:"#d0d2d6"}}
 						onClick={e => handleUpdateTicketStatus(e, "pending", null)}
 					>
 						{i18n.t("messagesList.header.buttons.return")}
@@ -85,16 +88,20 @@ const TicketActionButtons = ({ ticket }) => {
 					<ButtonWithSpinner
 						loading={loading}
 						size="small"
+						
 						variant="contained"
 						color="primary"
-						onClick={e => handleUpdateTicketStatus(e, "closed", user?.id)}
+						onClick={e => {
+							handleUpdateTicketStatus(e, "closed", user?.id);
+						}}
 					>
 						{i18n.t("messagesList.header.buttons.resolve")}
 					</ButtonWithSpinner>
-					<IconButton onClick={handleOpenTicketOptionsMenu}>
+					<IconButton style={{color:"#d0d2d6"}} onClick={handleOpenTicketOptionsMenu}>
 						<MoreVert />
 					</IconButton>
 					<TicketOptionsMenu
+						
 						ticket={ticket}
 						anchorEl={anchorEl}
 						menuOpen={ticketOptionsMenuOpen}

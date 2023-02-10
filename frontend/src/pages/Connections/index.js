@@ -30,7 +30,6 @@ import {
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-import Title from "../../components/Title";
 import TableRowSkeleton from "../../components/TableRowSkeleton";
 
 import api from "../../services/api";
@@ -46,6 +45,7 @@ const useStyles = makeStyles(theme => ({
 		flex: 1,
 		padding: theme.spacing(1),
 		overflowY: "scroll",
+		background: "#283046",
 		...theme.scrollbarStyles,
 	},
 	customTableCell: {
@@ -230,17 +230,17 @@ const Connections = () => {
 				{(whatsApp.status === "CONNECTED" ||
 					whatsApp.status === "PAIRING" ||
 					whatsApp.status === "TIMEOUT") && (
-					<Button
-						size="small"
-						variant="outlined"
-						color="secondary"
-						onClick={() => {
-							handleOpenConfirmationModal("disconnect", whatsApp.id);
-						}}
-					>
-						{i18n.t("connections.buttons.disconnect")}
-					</Button>
-				)}
+						<Button
+							size="small"
+							variant="outlined"
+							color="secondary"
+							onClick={() => {
+								handleOpenConfirmationModal("disconnect", whatsApp.id);
+							}}
+						>
+							{i18n.t("connections.buttons.disconnect")}
+						</Button>
+					)}
 				{whatsApp.status === "OPENING" && (
 					<Button size="small" variant="outlined" disabled color="default">
 						{i18n.t("connections.buttons.connecting")}
@@ -310,11 +310,12 @@ const Connections = () => {
 				whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
 			/>
 			<MainHeader>
-				<Title>{i18n.t("connections.title")}</Title>
+				<h1 style={{ color: "#d0d2d6" }}>Conexões</h1>
 				<MainHeaderButtonsWrapper>
 					<Button
 						variant="contained"
 						color="primary"
+						className="buttonRox"
 						onClick={handleOpenWhatsAppModal}
 					>
 						{i18n.t("connections.buttons.add")}
@@ -323,24 +324,24 @@ const Connections = () => {
 			</MainHeader>
 			<Paper className={classes.mainPaper} variant="outlined">
 				<Table size="small">
-					<TableHead>
+					<TableHead style={{ border: "1px solid #343d55", background: "#343d55", fontFamily: "Bold" }}>
 						<TableRow>
-							<TableCell align="center">
+							<TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
 								{i18n.t("connections.table.name")}
 							</TableCell>
-							<TableCell align="center">
+							<TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
 								{i18n.t("connections.table.status")}
 							</TableCell>
-							<TableCell align="center">
+							<TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
 								{i18n.t("connections.table.session")}
 							</TableCell>
-							<TableCell align="center">
+							<TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
 								{i18n.t("connections.table.lastUpdate")}
 							</TableCell>
-							<TableCell align="center">
+							<TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
 								{i18n.t("connections.table.default")}
 							</TableCell>
-							<TableCell align="center">
+							<TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
 								{i18n.t("connections.table.actions")}
 							</TableCell>
 						</TableRow>
@@ -353,25 +354,26 @@ const Connections = () => {
 								{whatsApps?.length > 0 &&
 									whatsApps.map(whatsApp => (
 										<TableRow key={whatsApp.id}>
-											<TableCell align="center">{whatsApp.name}</TableCell>
-											<TableCell align="center">
+											<TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{whatsApp.name}</TableCell>
+											<TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
 												{renderStatusToolTips(whatsApp)}
 											</TableCell>
-											<TableCell align="center">
+											<TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
 												{renderActionButtons(whatsApp)}
 											</TableCell>
-											<TableCell align="center">
+											<TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
 												{format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
 											</TableCell>
-											<TableCell align="center">
+											<TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
 												{whatsApp.isDefault && (
 													<div className={classes.customTableCell}>
 														<CheckCircle style={{ color: green[500] }} />
 													</div>
 												)}
 											</TableCell>
-											<TableCell align="center">
+											<TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
 												<IconButton
+													style={{ color: "#b4b7bd" }}
 													size="small"
 													onClick={() => handleEditWhatsApp(whatsApp)}
 												>
@@ -379,6 +381,7 @@ const Connections = () => {
 												</IconButton>
 
 												<IconButton
+													style={{ color: "#b4b7bd" }}
 													size="small"
 													onClick={e => {
 														handleOpenConfirmationModal("delete", whatsApp.id);

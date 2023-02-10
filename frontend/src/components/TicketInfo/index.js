@@ -14,8 +14,7 @@ const TicketInfo = ({ contact, ticket, onClick }) => {
 			avatar={<Avatar src={contact.profilePicUrl} alt="contact_image" />}
 			title={`${contact.name} #${ticket.id}`}
 			subheader={
-				ticket.user &&
-				`${i18n.t("messagesList.header.assignedTo")} ${ticket.user.name}`
+				ticket.user && (<label style={{color:"#d0d2d6"}}>{`${i18n.t("messagesList.header.assignedTo")} ${ticket.user.name}`}</label>)
 			}
 		/>
 	);

@@ -11,9 +11,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
@@ -21,7 +18,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-import Title from "../../components/Title";
 
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n";
@@ -29,6 +25,7 @@ import TableRowSkeleton from "../../components/TableRowSkeleton";
 import UserModal from "../../components/UserModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
+import host from "../../services/config";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_USERS") {
@@ -79,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     padding: theme.spacing(1),
     overflowY: "scroll",
+    background: "#283046",
     ...theme.scrollbarStyles,
   },
 }));
@@ -122,7 +120,7 @@ const Users = () => {
   }, [searchParam, pageNumber]);
 
   useEffect(() => {
-    const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+    const socket = openSocket(host.hostBack);
 
     socket.on("user", (data) => {
       if (data.action === "update" || data.action === "create") {
@@ -187,8 +185,7 @@ const Users = () => {
       <ConfirmationModal
         title={
           deletingUser &&
-          `${i18n.t("users.confirmationModal.deleteTitle")} ${
-            deletingUser.name
+          `${i18n.t("users.confirmationModal.deleteTitle")} ${deletingUser.name
           }?`
         }
         open={confirmModalOpen}
@@ -204,22 +201,11 @@ const Users = () => {
         userId={selectedUser && selectedUser.id}
       />
       <MainHeader>
-        <Title>{i18n.t("users.title")}</Title>
+        <h1 style={{ color: "#d0d2d6" }}>Usuários</h1>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <input value={searchParam} className="inputS" onChange={handleSearch} placeholder="Pesquisar" ></input>
           <Button
+            className="buttonRox"
             variant="contained"
             color="primary"
             onClick={handleOpenUserModal}
@@ -234,17 +220,20 @@ const Users = () => {
         onScroll={handleScroll}
       >
         <Table size="small">
-          <TableHead>
+          <TableHead style={{ border: "1px solid #343d55", background: "#343d55", fontFamily: "Bold" }}>
             <TableRow>
-              <TableCell align="center">{i18n.t("users.table.name")}</TableCell>
-              <TableCell align="center">
-                {i18n.t("users.table.email")}
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">Nome</TableCell>
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                Email
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("users.table.profile")}
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                Tipo
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("users.table.actions")}
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                WhatsApp
+              </TableCell>
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                Ações
               </TableCell>
             </TableRow>
           </TableHead>
@@ -252,27 +241,34 @@ const Users = () => {
             <>
               {users.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell align="center">{user.name}</TableCell>
-                  <TableCell align="center">{user.email}</TableCell>
-                  <TableCell align="center">{user.profile}</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      onClick={() => handleEditUser(user)}
-                    >
-                      <EditIcon />
-                    </IconButton>
+                  
 
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingUser(user);
-                      }}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </TableCell>
+                    <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{user.name}</TableCell>
+                    <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{user.email}</TableCell>
+                    <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{user.profile}</TableCell>
+                    <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{user.whatsapp?.name}</TableCell>
+                    <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
+                      <IconButton
+                      style={{color:"#b4b7bd"}}
+                        size="small"
+                        onClick={() => handleEditUser(user)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+
+                      <IconButton
+                      style={{color:"#b4b7bd"}}
+                        size="small"
+                        onClick={(e) => {
+                          setConfirmModalOpen(true);
+                          setDeletingUser(user);
+                        }}
+                      >
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </TableCell>
+
+                    
                 </TableRow>
               ))}
               {loading && <TableRowSkeleton columns={4} />}

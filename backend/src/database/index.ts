@@ -10,7 +10,12 @@ import Queue from "../models/Queue";
 import WhatsappQueue from "../models/WhatsappQueue";
 import UserQueue from "../models/UserQueue";
 import QuickAnswer from "../models/QuickAnswer";
-
+import Baileys from "../models/Baileys";
+import Chatbot from "../models/Chatbot";
+import DialogChatBots from "../models/DialogChatBots";
+import Schedule from "../models/Schedule";
+import Tag from "../models/Tag";
+import TicketTag from "../models/TicketTag";
 // eslint-disable-next-line
 const dbConfig = require("../config/database");
 // import dbConfig from "../config/database";
@@ -28,7 +33,13 @@ const models = [
   Queue,
   WhatsappQueue,
   UserQueue,
-  QuickAnswer
+  QuickAnswer,
+  Baileys,
+  Chatbot,
+  DialogChatBots,
+  Schedule,
+  Tag,
+  TicketTag
 ];
 
 sequelize.addModels(models);

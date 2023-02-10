@@ -1,0 +1,71 @@
+.inputS {
+    border: 2px solid rgb(64, 70, 86);
+    background: transparent;
+    padding: 7px;
+    font-family: Regular;
+    color: rgb(101, 116, 116);
+    border-radius: 4px;
+    outline: none;
+}
+
+.inputS:focus {
+    border: 2px solid #7367f0;
+}
+
+.buttonRox {
+    text-transform: none;
+    -webkit-appearance: button;
+    line-height: 1;
+    font-family: Regular;
+    /* vertical-align: middle; */
+    user-select: none;
+    font-size: 1rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, background 0s, border 0s;
+    display: block !important;
+    width: 100% ;
+    font-weight: 500;
+    color: #fff !important;
+    margin: 0;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: .786rem 1.5rem;
+    border-radius: .358rem;
+    box-shadow: none;
+    border-color: #7367f0 !important;
+    background-color: #7367f0 !important;
+    cursor: pointer;
+    margin-top: 26px;
+}
+
+.buttonRox:hover {
+    box-shadow: 0 0 10px #7367f0;
+}
+
+.buttonRed {
+    text-transform: none;
+    -webkit-appearance: button;
+    line-height: 1;
+    font-family: Regular;
+    /* vertical-align: middle; */
+    user-select: none;
+    font-size: 1rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, background 0s, border 0s;
+    display: block !important;
+    width: 100% !important;
+    font-weight: 500;
+    color: #fff !important;
+    margin: 0;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: .786rem 1.5rem;
+    border-radius: .358rem;
+    box-shadow: none;
+    border-color: #ea5455 !important;
+    background-color: #ea5455 !important;
+    cursor: pointer;
+    margin-top: 26px;
+}
+
+.buttonRed:hover {
+    box-shadow: 0 0 10px #ea5455;
+}

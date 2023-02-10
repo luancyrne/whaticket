@@ -1,3 +1,4 @@
+import { startQueueProcess } from "../../queues";
 import ListWhatsAppsService from "../WhatsappService/ListWhatsAppsService";
 import { StartWhatsAppSession } from "./StartWhatsAppSession";
 
@@ -8,4 +9,8 @@ export const StartAllWhatsAppsSessions = async (): Promise<void> => {
       StartWhatsAppSession(whatsapp);
     });
   }
+
+  setTimeout(() => {
+    startQueueProcess();
+  }, 5000);
 };

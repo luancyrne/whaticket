@@ -10,17 +10,14 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  InputAdornment,
-  TextField,
+  TableRow
 } from "@material-ui/core";
 import { Edit, DeleteOutline } from "@material-ui/icons";
-import SearchIcon from "@material-ui/icons/Search";
 
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
+import host from "../../services/config";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-import Title from "../../components/Title";
 
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n";
@@ -79,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     padding: theme.spacing(1),
     overflowY: "scroll",
+    background: "#283046",
     ...theme.scrollbarStyles,
   },
 }));
@@ -122,7 +120,7 @@ const QuickAnswers = () => {
   }, [searchParam, pageNumber]);
 
   useEffect(() => {
-    const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+    const socket = openSocket(host.hostBack);
 
     socket.on("quickAnswer", (data) => {
       if (data.action === "update" || data.action === "create") {
@@ -190,8 +188,7 @@ const QuickAnswers = () => {
       <ConfirmationModal
         title={
           deletingQuickAnswers &&
-          `${i18n.t("quickAnswers.confirmationModal.deleteTitle")} ${
-            deletingQuickAnswers.shortcut
+          `${i18n.t("quickAnswers.confirmationModal.deleteTitle")} ${deletingQuickAnswers.shortcut
           }?`
         }
         open={confirmModalOpen}
@@ -207,24 +204,13 @@ const QuickAnswers = () => {
         quickAnswerId={selectedQuickAnswers && selectedQuickAnswers.id}
       ></QuickAnswersModal>
       <MainHeader>
-        <Title>{i18n.t("quickAnswers.title")}</Title>
+        <h1 style={{ color: "#d0d2d6" }}>Respostas Rápidas</h1>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("quickAnswers.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <input value={searchParam} className="inputS" onChange={handleSearch} placeholder="Pesquisar" ></input>
           <Button
             variant="contained"
             color="primary"
+            className="buttonRox"
             onClick={handleOpenQuickAnswersModal}
           >
             {i18n.t("quickAnswers.buttons.add")}
@@ -237,16 +223,16 @@ const QuickAnswers = () => {
         onScroll={handleScroll}
       >
         <Table size="small">
-          <TableHead>
+          <TableHead style={{ border: "1px solid #343d55", background: "#343d55", fontFamily: "Bold" }}>
             <TableRow>
-              <TableCell align="center">
-                {i18n.t("quickAnswers.table.shortcut")}
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                Atalho
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("quickAnswers.table.message")}
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                Mensagem
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("quickAnswers.table.actions")}
+              <TableCell style={{ color: "#d0d2d6", borderBottom: "1px solid #3b4253" }} align="center">
+                Ações
               </TableCell>
             </TableRow>
           </TableHead>
@@ -254,11 +240,12 @@ const QuickAnswers = () => {
             <>
               {quickAnswers.map((quickAnswer) => (
                 <TableRow key={quickAnswer.id}>
-                  <TableCell align="center">{quickAnswer.shortcut}</TableCell>
-                  <TableCell align="center">{quickAnswer.message}</TableCell>
-                  <TableCell align="center">
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{quickAnswer.shortcut}</TableCell>
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">{quickAnswer.message}</TableCell>
+                  <TableCell style={{ borderBottom: "1px solid #3b4253", color: "#676d7d", fontFamily: "Bold" }} align="center">
                     <IconButton
                       size="small"
+                      style={{ color: "#b4b7bd" }}
                       onClick={() => handleEditQuickAnswers(quickAnswer)}
                     >
                       <Edit />
@@ -266,6 +253,7 @@ const QuickAnswers = () => {
 
                     <IconButton
                       size="small"
+                      style={{ color: "#b4b7bd" }}
                       onClick={(e) => {
                         setConfirmModalOpen(true);
                         setDeletingQuickAnswers(quickAnswer);

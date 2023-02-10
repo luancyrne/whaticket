@@ -41,7 +41,6 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
-    background: "#eee",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -51,10 +50,11 @@ const useStyles = makeStyles((theme) => ({
       bottom: 0,
       width: "100%",
     },
+    background:"#283046"
   },
 
   newMessageBox: {
-    background: "#eee",
+    background: "#283046",
     width: "100%",
     display: "flex",
     padding: "7px",
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   sendMessageIcons: {
-    color: "grey",
+    color: "#d0d2d6",
   },
 
   uploadInput: {
@@ -491,7 +491,7 @@ const MessageInput = ({ ticketStatus }) => {
               </IconButton>
             </label>
             <FormControlLabel
-              style={{ marginRight: 7, color: "gray" }}
+              style={{ marginRight: 7, color: "#d0d2d6" }}
               label={i18n.t("messagesInput.signMessage")}
               labelPlacement="start"
               control={
@@ -543,17 +543,18 @@ const MessageInput = ({ ticketStatus }) => {
                 />
                 <label htmlFor="upload-button">
                   <IconButton
+                    style={{color:"#d0d2d6"}}
                     aria-label="upload"
                     component="span"
                     disabled={loading || recording || ticketStatus !== "open"}
                   >
-                    <AttachFileIcon className={classes.sendMessageIcons} />
+                    <AttachFileIcon style={{color:"#d0d2d6"}} className={classes.sendMessageIcons} />
                   </IconButton>
                 </label>
               </MenuItem>
               <MenuItem onClick={handleMenuItemClick}>
                 <FormControlLabel
-                  style={{ marginRight: 7, color: "gray" }}
+                  style={{ marginRight: 7, color: "#d0d2d6" }}
                   label={i18n.t("messagesInput.signMessage")}
                   labelPlacement="start"
                   control={
@@ -625,18 +626,19 @@ const MessageInput = ({ ticketStatus }) => {
               onClick={handleSendMessage}
               disabled={loading}
             >
-              <SendIcon className={classes.sendMessageIcons} />
+              <SendIcon style={{color:"#d0d2d6"}} className={classes.sendMessageIcons} />
             </IconButton>
           ) : recording ? (
             <div className={classes.recorderWrapper}>
               <IconButton
+                style={{color:"#d0d2d6"}}
                 aria-label="cancelRecording"
                 component="span"
                 fontSize="large"
                 disabled={loading}
                 onClick={handleCancelAudio}
               >
-                <HighlightOffIcon className={classes.cancelAudioIcon} />
+                <HighlightOffIcon  className={classes.cancelAudioIcon} />
               </IconButton>
               {loading ? (
                 <div>
@@ -647,22 +649,24 @@ const MessageInput = ({ ticketStatus }) => {
               )}
 
               <IconButton
+                style={{color:"#d0d2d6"}}
                 aria-label="sendRecordedAudio"
                 component="span"
                 onClick={handleUploadAudio}
                 disabled={loading}
               >
-                <CheckCircleOutlineIcon className={classes.sendAudioIcon} />
+                <CheckCircleOutlineIcon style={{color:"#d0d2d6"}} className={classes.sendAudioIcon} />
               </IconButton>
             </div>
           ) : (
             <IconButton
+              style={{color:"#d0d2d6"}}
               aria-label="showRecorder"
               component="span"
               disabled={loading || ticketStatus !== "open"}
               onClick={handleStartRecording}
             >
-              <MicIcon className={classes.sendMessageIcons} />
+              <MicIcon style={{color:"#d0d2d6"}} className={classes.sendMessageIcons} />
             </IconButton>
           )}
         </div>

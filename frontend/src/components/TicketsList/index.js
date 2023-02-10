@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 
 import TicketListItem from "../TicketListItem";
 import TicketsListSkeleton from "../TicketsListSkeleton";
+import host from "../../services/config";
 
 import useTickets from "../../hooks/useTickets";
 import { i18n } from "../../translate/i18n";
@@ -25,9 +26,11 @@ const useStyles = makeStyles(theme => ({
 
 	ticketsList: {
 		flex: 1,
+		background:"#283046",
 		overflowY: "scroll",
 		...theme.scrollbarStyles,
 		borderTop: "2px solid rgba(0, 0, 0, 0.12)",
+		color:"#d0d2d6"
 	},
 
 	ticketsListHeader: {
@@ -153,7 +156,7 @@ const reducer = (state, action) => {
 };
 
 	const TicketsList = (props) => {
-		const { status, searchParam, showAll, selectedQueueIds, updateCount, style } =
+		const { status, searchParam, showAll, selectedQueueIds, updateCount, style, tags } =
 			props;
 	const classes = useStyles();
 	const [pageNumber, setPageNumber] = useState(1);
@@ -163,13 +166,14 @@ const reducer = (state, action) => {
 	useEffect(() => {
 		dispatch({ type: "RESET" });
 		setPageNumber(1);
-	}, [status, searchParam, dispatch, showAll, selectedQueueIds]);
+	}, [status, searchParam, dispatch, showAll, selectedQueueIds, tags]);
 
 	const { tickets, hasMore, loading } = useTickets({
 		pageNumber,
 		searchParam,
 		status,
 		showAll,
+		tags: JSON.stringify(tags),
 		queueIds: JSON.stringify(selectedQueueIds),
 	});
 
@@ -182,7 +186,7 @@ const reducer = (state, action) => {
 	}, [tickets, status, searchParam]);
 
 	useEffect(() => {
-		const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+		const socket = openSocket(host.hostBack);
 
 		const shouldUpdateTicket = ticket =>
 			(!ticket.userId || ticket.userId === user?.id || showAll) &&

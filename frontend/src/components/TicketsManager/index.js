@@ -8,6 +8,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Badge from "@material-ui/core/Badge";
 import MoveToInboxIcon from "@material-ui/icons/MoveToInbox";
+import { TagsFilter } from "../TagsFilter";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -26,9 +27,11 @@ import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   ticketsWrapper: {
     position: "relative",
+    background:"#283046",
     display: "flex",
     height: "100%",
     flexDirection: "column",
+    border:"0",
     overflow: "hidden",
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
@@ -48,13 +51,16 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     minWidth: 120,
     width: 120,
+    color:"#d0d2d6"
   },
 
   ticketOptionsBox: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    background: "#fafafa",
+    background: "#283046",
+    color:"#d0d2d6",
+    fontFamily:"Regular",
     padding: theme.spacing(1),
   },
 
@@ -82,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
   badge: {
     right: "-10px",
+    color:"#d0d2d6"
   },
   show: {
     display: "block",
@@ -93,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TicketsManager = () => {
   const classes = useStyles();
-
+  const [selectedTags, setSelectedTags] = useState([]);
   const [searchParam, setSearchParam] = useState("");
   const [tab, setTab] = useState("open");
   const [tabOpen, setTabOpen] = useState("open");
@@ -139,6 +146,11 @@ const TicketsManager = () => {
     }, 500);
   };
 
+  const handleSelectedTags = (selecteds) => {
+    const tags = selecteds.map(t => t.id);
+    setSelectedTags(tags);
+  }
+
   const handleChangeTab = (e, newValue) => {
     setTab(newValue);
   };
@@ -164,6 +176,7 @@ const TicketsManager = () => {
           value={tab}
           onChange={handleChangeTab}
           variant="fullWidth"
+          style={{background:"#283046"}}
           indicatorColor="primary"
           textColor="primary"
           aria-label="icon label tabs example"
@@ -204,10 +217,12 @@ const TicketsManager = () => {
           <>
             <Button
               variant="outlined"
+              className="buttonRox"
+              style={{width:"6em"}}
               color="primary"
               onClick={() => setNewTicketModalOpen(true)}
             >
-              {i18n.t("ticketsManager.buttons.newTicket")}
+              Novo
             </Button>
             <Can
               role={user.profile}
@@ -241,6 +256,7 @@ const TicketsManager = () => {
       </Paper>
       <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
         <Tabs
+          style={{background: "#283046"}}
           value={tabOpen}
           onChange={handleChangeTabOpen}
           indicatorColor="primary"
@@ -296,8 +312,10 @@ const TicketsManager = () => {
         />
       </TabPanel>
       <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
+      <TagsFilter onFiltered={handleSelectedTags} />
         <TicketsList
           searchParam={searchParam}
+          tags={selectedTags}
           showAll={true}
           selectedQueueIds={selectedQueueIds}
         />

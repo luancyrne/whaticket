@@ -6,6 +6,7 @@ import toastError from "../../errors/toastError";
 import { Dialog, DialogContent, Paper, Typography } from "@material-ui/core";
 import { i18n } from "../../translate/i18n";
 import api from "../../services/api";
+import host from "../../services/config";
 
 const QrcodeModal = ({ open, onClose, whatsAppId }) => {
 	const [qrCode, setQrCode] = useState("");
@@ -26,7 +27,7 @@ const QrcodeModal = ({ open, onClose, whatsAppId }) => {
 
 	useEffect(() => {
 		if (!whatsAppId) return;
-		const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+		const socket = openSocket(host.hostBack);
 
 		socket.on("whatsappSession", data => {
 			if (data.action === "update" && data.session.id === whatsAppId) {

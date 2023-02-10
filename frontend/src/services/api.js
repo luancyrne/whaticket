@@ -1,7 +1,8 @@
 import axios from "axios";
+import host from "./config";
 
 const api = axios.create({
-	baseURL: process.env.REACT_APP_BACKEND_URL,
+	baseURL: host.hostBack,
 	withCredentials: true,
 });
 

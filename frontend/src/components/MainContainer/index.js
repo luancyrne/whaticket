@@ -9,12 +9,13 @@ const useStyles = makeStyles((theme) => ({
     // padding: theme.spacing(2),
     // height: `calc(100% - 48px)`,
     padding: 0,
-    height: "100%",
+    height: "60em",
+    width:"81em"
   },
 
   contentWrapper: {
     height: "100%",
-    overflowY: "hidden",
+    overflowY: "unset",
     display: "flex",
     flexDirection: "column",
   },
@@ -24,7 +25,7 @@ const MainContainer = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.mainContainer} maxWidth={false}>
+    <Container className={classes.mainContainer} style={window.screen.width <= 600 ? {width:"100%"} : null} maxWidth={false}>
       <div className={classes.contentWrapper}>{children}</div>
     </Container>
   );

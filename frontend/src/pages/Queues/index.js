@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer, useState } from "react";
-
+import "../../layout/styles/button.css"
 import openSocket from "socket.io-client";
 
 import {
-  Button,
   IconButton,
   makeStyles,
   Paper,
@@ -19,20 +18,20 @@ import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 import TableRowSkeleton from "../../components/TableRowSkeleton";
-import Title from "../../components/Title";
-import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
 import api from "../../services/api";
 import { DeleteOutline, Edit } from "@material-ui/icons";
 import QueueModal from "../../components/QueueModal";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../../components/ConfirmationModal";
+import host from "../../services/config";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
     flex: 1,
     padding: theme.spacing(1),
     overflowY: "scroll",
+    background:"#283046",
     ...theme.scrollbarStyles,
   },
   customTableCell: {
@@ -111,7 +110,7 @@ const Queues = () => {
   }, []);
 
   useEffect(() => {
-    const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+    const socket = openSocket(host.hostBack);
 
     socket.on("queue", (data) => {
       if (data.action === "update" || data.action === "create") {
@@ -151,7 +150,7 @@ const Queues = () => {
   const handleDeleteQueue = async (queueId) => {
     try {
       await api.delete(`/queue/${queueId}`);
-      toast.success(i18n.t("Queue deleted successfully!"));
+      toast.success("Fila deletada com sucesso");
     } catch (err) {
       toastError(err);
     }
@@ -163,7 +162,7 @@ const Queues = () => {
       <ConfirmationModal
         title={
           selectedQueue &&
-          `${i18n.t("queues.confirmationModal.deleteTitle")} ${
+          `Excluir fila ${
             selectedQueue.name
           }?`
         }
@@ -171,7 +170,7 @@ const Queues = () => {
         onClose={handleCloseConfirmationModal}
         onConfirm={() => handleDeleteQueue(selectedQueue.id)}
       >
-        {i18n.t("queues.confirmationModal.deleteMessage")}
+        Você tem certeza? Essa ação não pode ser revertida! Os tickets dessa fila continuarão existindo, mas não terão mais nenhuma fila atribuída.
       </ConfirmationModal>
       <QueueModal
         open={queueModalOpen}
@@ -179,32 +178,31 @@ const Queues = () => {
         queueId={selectedQueue?.id}
       />
       <MainHeader>
-        <Title>{i18n.t("queues.title")}</Title>
+        <h1 style={{color:"#d0d2d6"}}>Filas</h1>
         <MainHeaderButtonsWrapper>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpenQueueModal}
+          <button
+          onClick={handleOpenQueueModal}
+          className="buttonRox"
           >
-            {i18n.t("queues.buttons.add")}
-          </Button>
+            Adicionar fila
+          </button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
       <Paper className={classes.mainPaper} variant="outlined">
-        <Table size="small">
-          <TableHead>
+        <Table size="small" >
+          <TableHead style={{border: "1px solid #343d55", background: "#343d55", fontFamily:"Bold"}}>
             <TableRow>
-              <TableCell align="center">
-                {i18n.t("queues.table.name")}
+              <TableCell align="center" style={{color:"#d0d2d6", borderBottom:"1px solid #3b4253"}}>
+                Setor
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.color")}
+              <TableCell align="center" style={{color:"#d0d2d6", borderBottom:"1px solid #3b4253"}}>
+                Cor
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.greeting")}
+              <TableCell align="center" style={{color:"#d0d2d6", borderBottom:"1px solid #3b4253"}}>
+                Mensagem de Resposta
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.actions")}
+              <TableCell align="center" style={{color:"#d0d2d6", borderBottom:"1px solid #3b4253"}}>
+                Ações
               </TableCell>
             </TableRow>
           </TableHead>
@@ -212,8 +210,8 @@ const Queues = () => {
             <>
               {queues.map((queue) => (
                 <TableRow key={queue.id}>
-                  <TableCell align="center">{queue.name}</TableCell>
-                  <TableCell align="center">
+                  <TableCell style={{borderBottom:"1px solid #3b4253", color:"#676d7d", fontFamily:"Bold"}} align="center">{queue.name}</TableCell>
+                  <TableCell style={{borderBottom:"1px solid #3b4253"}} align="center">
                     <div className={classes.customTableCell}>
                       <span
                         style={{
@@ -225,7 +223,7 @@ const Queues = () => {
                       />
                     </div>
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell style={{borderBottom:"1px solid #3b4253", color:"#676d7d", fontFamily:"Regular"}} align="center">
                     <div className={classes.customTableCell}>
                       <Typography
                         style={{ width: 300, align: "center" }}
@@ -236,15 +234,17 @@ const Queues = () => {
                       </Typography>
                     </div>
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell style={{borderBottom:"1px solid #3b4253"}} align="center" >
                     <IconButton
                       size="small"
+                      style={{color:"#b4b7bd"}}
                       onClick={() => handleEditQueue(queue)}
                     >
                       <Edit />
                     </IconButton>
 
                     <IconButton
+                      style={{color:"#b4b7bd"}}
                       size="small"
                       onClick={() => {
                         setSelectedQueue(queue);

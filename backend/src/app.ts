@@ -5,12 +5,14 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import * as Sentry from "@sentry/node";
+import { messageQueue, sendScheduledMessages } from "./queues";
 
 import "./database";
 import uploadConfig from "./config/upload";
 import AppError from "./errors/AppError";
 import routes from "./routes";
 import { logger } from "./utils/logger";
+import config from './config/config'
 
 Sentry.init({ dsn: process.env.SENTRY_DSN });
 
@@ -19,11 +21,29 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: process.env.FRONTEND_URL
+    origin: config.frontend
   })
 );
+
+app.use(express.json({
+  limit: '50mb'
+}));
+
 app.use(cookieParser());
-app.use(express.json());
+
+app.use(
+  express.urlencoded({
+    limit: "250mb",
+    parameterLimit: 200000,
+    extended: true
+  })
+);
+
+app.set("queues", {
+  messageQueue,
+  sendScheduledMessages
+})
+
 app.use(Sentry.Handlers.requestHandler());
 app.use("/public", express.static(uploadConfig.directory));
 app.use(routes);

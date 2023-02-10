@@ -5,55 +5,56 @@ import { format } from "date-fns";
 import openSocket from "socket.io-client";
 import useSound from "use-sound";
 
-import Popover from "@material-ui/core/Popover";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles } from "@material-ui/core/styles";
-import Badge from "@material-ui/core/Badge";
-import ChatIcon from "@material-ui/icons/Chat";
+// import Popover from "@material-ui/core/Popover";
+// import IconButton from "@material-ui/core/IconButton";
+// import List from "@material-ui/core/List";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemText from "@material-ui/core/ListItemText";
+// import { makeStyles } from "@material-ui/core/styles";
+// import Badge from "@material-ui/core/Badge";
+// import ChatIcon from "@material-ui/icons/Chat";
 
-import TicketListItem from "../TicketListItem";
+// import TicketListItem from "../TicketListItem";
 import { i18n } from "../../translate/i18n";
-import useTickets from "../../hooks/useTickets";
+// import useTickets from "../../hooks/useTickets";
 import alertSound from "../../assets/sound.mp3";
 import { AuthContext } from "../../context/Auth/AuthContext";
+import host from "../../services/config";
 
-const useStyles = makeStyles(theme => ({
-	tabContainer: {
-		overflowY: "auto",
-		maxHeight: 350,
-		...theme.scrollbarStyles,
-	},
-	popoverPaper: {
-		width: "100%",
-		maxWidth: 350,
-		marginLeft: theme.spacing(2),
-		marginRight: theme.spacing(1),
-		[theme.breakpoints.down("sm")]: {
-			maxWidth: 270,
-		},
-	},
-	noShadow: {
-		boxShadow: "none !important",
-	},
-}));
+// const useStyles = makeStyles(theme => ({
+// 	tabContainer: {
+// 		overflowY: "auto",
+// 		maxHeight: 350,
+// 		...theme.scrollbarStyles,
+// 	},
+// 	popoverPaper: {
+// 		width: "100%",
+// 		maxWidth: 350,
+// 		marginLeft: theme.spacing(2),
+// 		marginRight: theme.spacing(1),
+// 		[theme.breakpoints.down("sm")]: {
+// 			maxWidth: 270,
+// 		},
+// 	},
+// 	noShadow: {
+// 		boxShadow: "none !important",
+// 	},
+// }));
 
 const NotificationsPopOver = () => {
-	const classes = useStyles();
+	// const classes = useStyles();
 
 	const history = useHistory();
 	const { user } = useContext(AuthContext);
 	const ticketIdUrl = +history.location.pathname.split("/")[2];
 	const ticketIdRef = useRef(ticketIdUrl);
-	const anchorEl = useRef();
-	const [isOpen, setIsOpen] = useState(false);
-	const [notifications, setNotifications] = useState([]);
+	// const anchorEl = useRef();
+	// const [isOpen, setIsOpen] = useState(false);
+	// const [notifications, setNotifications] = useState([]);
 
 	const [, setDesktopNotifications] = useState([]);
 
-	const { tickets } = useTickets({ withUnreadMessages: "true" });
+	// const { tickets } = useTickets({ withUnreadMessages: "true" });
 	const [play] = useSound(alertSound);
 	const soundAlertRef = useRef();
 
@@ -63,35 +64,35 @@ const NotificationsPopOver = () => {
 		soundAlertRef.current = play;
 
 		if (!("Notification" in window)) {
-			console.log("This browser doesn't support notifications");
+			// console.log("This browser doesn't support notifications");
 		} else {
 			Notification.requestPermission();
 		}
 	}, [play]);
 
-	useEffect(() => {
-		setNotifications(tickets);
-	}, [tickets]);
+	// useEffect(() => {
+	// 	setNotifications(tickets);
+	// }, [tickets]);
 
 	useEffect(() => {
 		ticketIdRef.current = ticketIdUrl;
 	}, [ticketIdUrl]);
 
 	useEffect(() => {
-		const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+		const socket = openSocket(host.hostBack);
 
 		socket.on("connect", () => socket.emit("joinNotification"));
 
 		socket.on("ticket", data => {
 			if (data.action === "updateUnread" || data.action === "delete") {
-				setNotifications(prevState => {
-					const ticketIndex = prevState.findIndex(t => t.id === data.ticketId);
-					if (ticketIndex !== -1) {
-						prevState.splice(ticketIndex, 1);
-						return [...prevState];
-					}
-					return prevState;
-				});
+				// setNotifications(prevState => {
+				// 	const ticketIndex = prevState.findIndex(t => t.id === data.ticketId);
+				// 	if (ticketIndex !== -1) {
+				// 		prevState.splice(ticketIndex, 1);
+				// 		return [...prevState];
+				// 	}
+				// 	return prevState;
+				// });
 
 				setDesktopNotifications(prevState => {
 					const notfiticationIndex = prevState.findIndex(
@@ -113,14 +114,14 @@ const NotificationsPopOver = () => {
 				!data.message.read &&
 				(data.ticket.userId === user?.id || !data.ticket.userId)
 			) {
-				setNotifications(prevState => {
-					const ticketIndex = prevState.findIndex(t => t.id === data.ticket.id);
-					if (ticketIndex !== -1) {
-						prevState[ticketIndex] = data.ticket;
-						return [...prevState];
-					}
-					return [data.ticket, ...prevState];
-				});
+				// setNotifications(prevState => {
+				// 	const ticketIndex = prevState.findIndex(t => t.id === data.ticket.id);
+				// 	if (ticketIndex !== -1) {
+				// 		prevState[ticketIndex] = data.ticket;
+				// 		return [...prevState];
+				// 	}
+				// 	return [data.ticket, ...prevState];
+				// });
 
 				const shouldNotNotificate =
 					(data.message.ticketId === ticketIdRef.current &&
@@ -174,21 +175,21 @@ const NotificationsPopOver = () => {
 		soundAlertRef.current();
 	};
 
-	const handleClick = () => {
-		setIsOpen(prevState => !prevState);
-	};
+	// const handleClick = () => {
+	// 	setIsOpen(prevState => !prevState);
+	// };
 
-	const handleClickAway = () => {
-		setIsOpen(false);
-	};
+	// const handleClickAway = () => {
+	// 	setIsOpen(false);
+	// };
 
-	const NotificationTicket = ({ children }) => {
-		return <div onClick={handleClickAway}>{children}</div>;
-	};
+	// const NotificationTicket = ({ children }) => {
+	// 	return <div onClick={handleClickAway}>{children}</div>;
+	// };
 
 	return (
 		<>
-			<IconButton
+			{/* <IconButton
 				onClick={handleClick}
 				buttonRef={anchorEl}
 				aria-label="Open Notifications"
@@ -226,7 +227,7 @@ const NotificationsPopOver = () => {
 						))
 					)}
 				</List>
-			</Popover>
+			</Popover> */}
 		</>
 	);
 };

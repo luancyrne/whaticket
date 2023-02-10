@@ -1,26 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useTheme } from "@material-ui/core/styles";
 import {
 	BarChart,
 	CartesianGrid,
 	Bar,
 	XAxis,
 	YAxis,
-	Label,
 	ResponsiveContainer,
 } from "recharts";
 import { startOfHour, parseISO, format } from "date-fns";
 
-import { i18n } from "../../translate/i18n";
-
-import Title from "./Title";
-import useTickets from "../../hooks/useTickets";
+import useDashboard from "../../hooks/useDashboard";
 
 const Chart = () => {
-	const theme = useTheme();
 
 	const date = useRef(new Date().toISOString());
-	const { tickets } = useTickets({ date: date.current });
+	const { tickets } = useDashboard({ date: date.current });
 
 	const [chartData, setChartData] = useState([
 		{ time: "08:00", amount: 0 },
@@ -35,6 +29,11 @@ const Chart = () => {
 		{ time: "17:00", amount: 0 },
 		{ time: "18:00", amount: 0 },
 		{ time: "19:00", amount: 0 },
+		{ time: "20:00", amount: 0 },
+		{ time: "21:00", amount: 0 },
+		{ time: "22:00", amount: 0 },
+		{ time: "23:00", amount: 0 },
+		{ time: "00:00", amount: 0 },
 	]);
 
 	useEffect(() => {
@@ -54,9 +53,7 @@ const Chart = () => {
 
 	return (
 		<React.Fragment>
-			<Title>{`${i18n.t("dashboard.charts.perDay.title")}${
-				tickets.length
-			}`}</Title>
+			<h1 style={{color:"#d0d2d6", fontFamily:"Regular"}}>Atendimentos Hoje: {tickets.length}</h1>
 			<ResponsiveContainer>
 				<BarChart
 					data={chartData}
@@ -71,21 +68,15 @@ const Chart = () => {
 					}}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis dataKey="time" stroke={theme.palette.text.secondary} />
+					<XAxis dataKey="time" stroke={"white"} />
 					<YAxis
 						type="number"
 						allowDecimals={false}
-						stroke={theme.palette.text.secondary}
+						stroke={"white"}
 					>
-						<Label
-							angle={270}
-							position="left"
-							style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
-						>
-							Tickets
-						</Label>
+						
 					</YAxis>
-					<Bar dataKey="amount" fill={theme.palette.primary.main} />
+					<Bar dataKey="amount" fill={"#a5f8cd"} />
 				</BarChart>
 			</ResponsiveContainer>
 		</React.Fragment>

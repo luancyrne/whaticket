@@ -3,7 +3,8 @@ import React, { useState, useEffect, useReducer, useRef } from "react";
 import { isSameDay, parseISO, format } from "date-fns";
 import openSocket from "socket.io-client";
 import clsx from "clsx";
-
+// import VcardPreview from "../VcardPreview";
+// import LocationPreview from "../LocationPreview";
 import { green } from "@material-ui/core/colors";
 import {
   Button,
@@ -24,10 +25,11 @@ import {
 import MarkdownWrapper from "../MarkdownWrapper";
 import ModalImageCors from "../ModalImageCors";
 import MessageOptionsMenu from "../MessageOptionsMenu";
-import whatsBackground from "../../assets/wa-background.png";
+import whatsBackground from "../../layout/img/download.svg";
 
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
+import host from "../../services/config";
 
 const useStyles = makeStyles((theme) => ({
   messagesListWrapper: {
@@ -40,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
 
   messagesList: {
     backgroundImage: `url(${whatsBackground})`,
+    backgroundColor: "#1e232f",
+    backgroundRepeat: "repeat",
+    backgroundSize: "210px",
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
@@ -76,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     whiteSpace: "pre-wrap",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#283046",
     color: "#303030",
     alignSelf: "flex-start",
     borderTopLeftRadius: 0,
@@ -93,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   quotedContainerLeft: {
     margin: "-3px -80px 6px -6px",
     overflow: "hidden",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#333631",
     borderRadius: "7.5px",
     display: "flex",
     position: "relative",
@@ -130,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     whiteSpace: "pre-wrap",
-    backgroundColor: "#dcf8c6",
+    backgroundColor: "#877cf3",
     color: "#303030",
     alignSelf: "flex-end",
     borderTopLeftRadius: 8,
@@ -185,6 +190,7 @@ const useStyles = makeStyles((theme) => ({
   textContentItem: {
     overflowWrap: "break-word",
     padding: "3px 80px 6px 6px",
+    color: "#fff"
   },
 
   textContentItemDeleted: {
@@ -209,7 +215,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: 0,
     right: 5,
-    color: "#999",
+    color: "#d0d2d6",
   },
 
   dailyTimestamp: {
@@ -231,6 +237,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ackIcons: {
+    color: "#d0d2d6",
     fontSize: 18,
     verticalAlign: "middle",
     marginLeft: 4,
@@ -243,7 +250,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ackDoneAllIcon: {
-    color: green[500],
+    color: "#29c76e",
     fontSize: 18,
     verticalAlign: "middle",
     marginLeft: 4,
@@ -356,7 +363,7 @@ const MessagesList = ({ ticketId, isGroup }) => {
   }, [pageNumber, ticketId]);
 
   useEffect(() => {
-    const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+    const socket = openSocket(host.hostBack);
 
     socket.on("connect", () => socket.emit("joinChatBox", ticketId));
 
@@ -413,6 +420,38 @@ const MessagesList = ({ ticketId, isGroup }) => {
   };
 
   const checkMessageMedia = (message) => {
+    // if (message.mediaType === "location" && message.body.split('|').length >= 2) {
+    //   let locationParts = message.body.split('|')
+    //   let imageLocation = locationParts[0]
+    //   let linkLocation = locationParts[1]
+
+    //   let descriptionLocation = null
+
+    //   if (locationParts.length > 2)
+    //     descriptionLocation = message.body.split('|')[2]
+
+    //   return <LocationPreview image={imageLocation} link={linkLocation} description={descriptionLocation} />
+    // }
+    // else if (message.mediaType === "vcard") {
+    //   //console.log("vcard")
+    //   //console.log(message)
+    //   let array = message.body.split("\n");
+    //   let obj = [];
+    //   let contact = "";
+    //   for (let index = 0; index < array.length; index++) {
+    //     const v = array[index];
+    //     let values = v.split(":");
+    //     for (let ind = 0; ind < values.length; ind++) {
+    //       if (values[ind].indexOf("+") !== -1) {
+    //         obj.push({ number: values[ind] });
+    //       }
+    //       if (values[ind].indexOf("FN") !== -1) {
+    //         contact = values[ind + 1];
+    //       }
+    //     }
+    //   }
+    //   return <VcardPreview contact={contact} numbers={obj[0]?.number} />
+    // }
     if (message.mediaType === "image") {
       return <ModalImageCors imageUrl={message.mediaUrl} />;
     }
@@ -438,7 +477,7 @@ const MessagesList = ({ ticketId, isGroup }) => {
           <div className={classes.downloadMedia}>
             <Button
               startIcon={<GetApp />}
-              color="primary"
+              color="#fff"
               variant="outlined"
               target="_blank"
               href={message.mediaUrl}
