@@ -71,7 +71,10 @@ Create Mysql Database using docker:
 _Note_: change MYSQL_DATABASE, MYSQL_PASSWORD, MYSQL_USER and MYSQL_ROOT_PASSWORD.
 
 ```bash
-docker run --name whaticketdb -e MYSQL_ROOT_PASSWORD=strongpassword -e MYSQL_DATABASE=whaticket -e MYSQL_USER=whaticket -e MYSQL_PASSWORD=whaticket --restart always -p 3306:3306 -d mariadb:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+docker run --name redis-whaticket -p 6379:6379 -d --restart=always redis:latest redis-server --appendonly yes --requirepass "Yourpassword"
+```
+```bash
+docker run --name postgresql -e POSTGRES_USER=whaticket -e POSTGRES_PASSWORD=Yourpassword -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres
 ```
 
 Install puppeteer dependencies:
