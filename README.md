@@ -29,7 +29,7 @@ The entire structure of the backend project was changed so that it could be adap
 
 This project is used by the following companies:
 
-- <a href="http://cnx.net.br/"><img src="https://www.cnx.net.br/wp-content/uploads/sites/11/2022/04/logopreta.png" width="150"></a>
+- <a href="http://cnx.net.br/"><img src="https://raw.githubusercontent.com/luancyrne/GerenciadoorindoorAPI/master/whiteLogo.png" width="150"></a>
 
 # WhaTicket
 
